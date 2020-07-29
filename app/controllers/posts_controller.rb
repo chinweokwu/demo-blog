@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
     def index
+        @posts = Post.all.order("created_at DESC")
     end
     def new
         @post = Post.new
@@ -13,8 +14,23 @@ class PostsController < ApplicationController
             render 'new'
         end
     end
+
     def show 
         @post = Post.find(params[:id])
+    end
+
+    def edit
+        @post = Post.find(params[:id]) 
+    end
+
+    def update
+        @post = Post.find(params[:id])
+
+        if @post.updated(post_params)
+            redirect_to @post
+        else
+            render "edit"
+        end
     end
 
     private
